@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+<!--
+ La etiqueta meta de name viewport es importante para que el juego se vea bien en dispositivos móviles. Ajusta la escala inicial y el ancho de la ventana gráfica.
+-->    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong para dos jugadores</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #f8fafc;
+            background: #111827;
+        }
+
+        .game-shell {
+            width: min(920px, 94vw);
+            padding: 24px;
+        }
+
+        header {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            letter-spacing: 0;
+        }
+
+        .scoreboard {
+            display: flex;
+            gap: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .score-card {
+            min-width: 92px;
+            padding: 10px 12px;
+            text-align: center;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            background: #1f2937;
+        }
+
+        .score-card span {
+            display: block;
+            margin-top: 4px;
+            font-size: 2rem;
+            color: #38bdf8;
+        }
+
+        .canvas-wrap {
+            position: relative;
+        }
+
+        canvas {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            display: block;
+            border: 2px solid #38bdf8;
+            border-radius: 8px;
+            background: #020617;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+        }
+
+        .message {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: min(520px, 82%);
+            padding: 18px;
+            text-align: center;
+            line-height: 1.45;
+            border: 1px solid #475569;
+            border-radius: 8px;
+            background: rgba(15, 23, 42, 0.88);
+            transform: translate(-50%, -50%);
+        }
+
+        .message strong {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 1.3rem;
+            color: #7dd3fc;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .instructions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .instruction {
+            padding: 14px;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            background: #1f2937;
+        }
+
+        .instruction h2 {
+            margin: 0 0 8px;
+            font-size: 1rem;
+            color: #7dd3fc;
+        }
+
+        .instruction p {
+            margin: 0;
+            line-height: 1.45;
+            color: #cbd5e1;
+        }
+
+        kbd {
+            display: inline-block;
+            min-width: 28px;
+            padding: 3px 7px;
+            margin: 0 2px;
+            text-align: center;
+            border: 1px solid #64748b;
+            border-radius: 5px;
+            color: #f8fafc;
+            background: #0f172a;
+        }
+
+        @media (max-width: 720px) {
+            body {
+                align-items: start;
+            }
+
+            .game-shell {
+                padding: 16px;
+            }
+
+            header,
+            .instructions {
+                grid-template-columns: 1fr;
+                display: grid;
+            }
+
+            .scoreboard {
+                width: 100%;
+            }
+
+            .score-card {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="game-shell">
+        <header>
+            <div>
+                <h1>Pong</h1>
+                <p>Primer jugador en llegar a 5 puntos gana la partida.</p>
+            </div>
+
+            <section class="scoreboard" aria-label="Marcador">
+                <div class="score-card">
+                    Jugador A
+                    <span id="leftScore">0</span>
+                </div>
+                <div class="score-card">
+                    Jugador B
+                    <span id="rightScore">0</span>
+                </div>
+            </section>
+        </header>
+
+        <section class="canvas-wrap" aria-label="Área de juego">
+            <canvas id="gameCanvas" width="900" height="506"></canvas>
+            <div id="gameMessage" class="message">
+                <strong>Presioná Espacio para comenzar</strong>
+                Jugador A usa <kbd>A</kbd> y <kbd>Z</kbd>. Jugador B usa las flechas <kbd>↑</kbd> y <kbd>↓</kbd>.
+            </div>
+        </section>
+
+        <section class="instructions" aria-label="Instrucciones">
+            <article class="instruction">
+                <h2>Jugador A</h2>
+                <p>Mové la paleta izquierda con <kbd>A</kbd> para subir y <kbd>Z</kbd> para bajar.</p>
+            </article>
+            <article class="instruction">
+                <h2>Jugador B</h2>
+                <p>Mové la paleta derecha con las teclas de cursor <kbd>↑</kbd> y <kbd>↓</kbd>.</p>
+            </article>
+            <article class="instruction">
+                <h2>Reinicio</h2>
+                <p>Después de cada punto, la pelota vuelve al centro. Presioná <kbd>Espacio</kbd> para sacar.</p>
+            </article>
+        </section>
+    </main>
+
+    <script>
+        // Obtenemos referencias a los elementos principales de la interfaz.
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const leftScoreElement = document.getElementById("leftScore");
+        const rightScoreElement = document.getElementById("rightScore");
+        const gameMessage = document.getElementById("gameMessage");
+
+        // Medidas generales del juego. Usar constantes facilita ajustar la dificultad.
+        const paddleWidth = 14;
+        const paddleHeight = 92;
+        const paddleSpeed = 7;
+        const ballRadius = 9;
+        const winningScore = 5;
+
+        // Estado de las teclas presionadas. Lo actualizamos con keydown y keyup.
+        const keysPressed = {
+            a: false,
+            z: false,
+            arrowUp: false,
+            arrowDown: false
+        };
+
+        // Estado completo de la partida: paletas, pelota, puntaje y flujo de juego.
+        const game = {
+            leftPaddleY: canvas.height / 2 - paddleHeight / 2,
+            rightPaddleY: canvas.height / 2 - paddleHeight / 2,
+            ballX: canvas.width / 2,
+            ballY: canvas.height / 2,
+            ballSpeedX: 0,
+            ballSpeedY: 0,
+            leftScore: 0,
+            rightScore: 0,
+            waitingForServe: true,
+            gameOver: false
+        };
+
+        // Esta función mantiene un valor dentro de un rango. La usamos para que
+        // las paletas no puedan salir por arriba ni por abajo del canvas.
+        function clamp(value, min, max) {
+            return Math.max(min, Math.min(max, value));
+        }
+
+        // Reinicia la pelota al centro después de un punto o al comenzar una partida.
+        // El parámetro direction define hacia qué lado sale: 1 derecha, -1 izquierda.
+        function resetBall(direction = Math.random() > 0.5 ? 1 : -1) {
+            game.ballX = canvas.width / 2;
+            game.ballY = canvas.height / 2;
+            game.ballSpeedX = 5 * direction;
+            game.ballSpeedY = (Math.random() * 4 - 2) || 2;
+            game.waitingForServe = true;
+        }
+
+        // Devuelve toda la partida a cero cuando alguien ganó.
+        function resetGame() {
+            game.leftScore = 0;
+            game.rightScore = 0;
+            game.leftPaddleY = canvas.height / 2 - paddleHeight / 2;
+            game.rightPaddleY = canvas.height / 2 - paddleHeight / 2;
+            game.gameOver = false;
+            updateScoreboard();
+            resetBall();
+            showMessage("Presioná Espacio para comenzar", "Jugador A: A/Z. Jugador B: flechas arriba/abajo.");
+        }
+
+        // Muestra el mensaje central del juego con un título y un texto secundario.
+        function showMessage(title, text) {
+            gameMessage.innerHTML = `<strong>${title}</strong>${text}`;
+            gameMessage.classList.remove("hidden");
+        }
+
+        // Oculta el mensaje central cuando la pelota está en movimiento.
+        function hideMessage() {
+            gameMessage.classList.add("hidden");
+        }
+
+        // Mantiene el marcador visual sincronizado con los valores del estado.
+        function updateScoreboard() {
+            leftScoreElement.textContent = game.leftScore;
+            rightScoreElement.textContent = game.rightScore;
+        }
+
+        // Inicia el saque. Si la partida terminó, Espacio comienza una partida nueva.
+        function serveBall() {
+            if (game.gameOver) {
+                resetGame();
+                return;
+            }
+
+            game.waitingForServe = false;
+            hideMessage();
+        }
+
+        // Procesa el punto anotado, actualiza el marcador y prepara el siguiente saque.
+        function scorePoint(player) {
+            if (player === "left") {
+                game.leftScore += 1;
+                resetBall(1);
+            } else {
+                game.rightScore += 1;
+                resetBall(-1);
+            }
+
+            updateScoreboard();
+
+            // Si alguien llega al puntaje ganador, pausamos el juego hasta reiniciar.
+            if (game.leftScore >= winningScore || game.rightScore >= winningScore) {
+                const winner = game.leftScore > game.rightScore ? "Jugador A" : "Jugador B";
+                game.gameOver = true;
+                showMessage(`${winner} ganó`, "Presioná Espacio para jugar otra vez.");
+                return;
+            }
+
+            showMessage("Punto anotado", "Presioná Espacio para el siguiente saque.");
+        }
+
+        // Actualiza la posición de las paletas según las teclas que estén presionadas.
+        function updatePaddles() {
+            if (keysPressed.a) {
+                game.leftPaddleY -= paddleSpeed;
+            }
+
+            if (keysPressed.z) {
+                game.leftPaddleY += paddleSpeed;
+            }
+
+            if (keysPressed.arrowUp) {
+                game.rightPaddleY -= paddleSpeed;
+            }
+
+            if (keysPressed.arrowDown) {
+                game.rightPaddleY += paddleSpeed;
+            }
+
+            game.leftPaddleY = clamp(game.leftPaddleY, 0, canvas.height - paddleHeight);
+            game.rightPaddleY = clamp(game.rightPaddleY, 0, canvas.height - paddleHeight);
+        }
+
+        // Actualiza la pelota: movimiento, rebotes contra paredes y choques con paletas.
+        function updateBall() {
+            if (game.waitingForServe || game.gameOver) {
+                return;
+            }
+
+            game.ballX += game.ballSpeedX;
+            game.ballY += game.ballSpeedY;
+
+            // Rebote contra los bordes superior e inferior.
+            if (game.ballY - ballRadius <= 0 || game.ballY + ballRadius >= canvas.height) {
+                game.ballSpeedY *= -1;
+            }
+
+            const leftPaddleX = 28;
+            const rightPaddleX = canvas.width - 28 - paddleWidth;
+
+            // Detectamos colisión con la paleta izquierda solo si la pelota viaja hacia ella.
+            const hitsLeftPaddle =
+                game.ballSpeedX < 0 &&
+                game.ballX - ballRadius <= leftPaddleX + paddleWidth &&
+                game.ballX + ballRadius >= leftPaddleX &&
+                game.ballY >= game.leftPaddleY &&
+                game.ballY <= game.leftPaddleY + paddleHeight;
+
+            // Detectamos colisión con la paleta derecha solo si la pelota viaja hacia ella.
+            const hitsRightPaddle =
+                game.ballSpeedX > 0 &&
+                game.ballX + ballRadius >= rightPaddleX &&
+                game.ballX - ballRadius <= rightPaddleX + paddleWidth &&
+                game.ballY >= game.rightPaddleY &&
+                game.ballY <= game.rightPaddleY + paddleHeight;
+
+            if (hitsLeftPaddle || hitsRightPaddle) {
+                const paddleY = hitsLeftPaddle ? game.leftPaddleY : game.rightPaddleY;
+                const paddleCenter = paddleY + paddleHeight / 2;
+                const hitPosition = (game.ballY - paddleCenter) / (paddleHeight / 2);
+
+                // Invertimos la dirección horizontal y sumamos un poco de velocidad.
+                game.ballSpeedX *= -1.06;
+
+                // El ángulo depende de dónde golpea la pelota en la paleta.
+                game.ballSpeedY = hitPosition * 6;
+
+                // Empujamos la pelota fuera de la paleta para evitar múltiples choques seguidos.
+                game.ballX = hitsLeftPaddle
+                    ? leftPaddleX + paddleWidth + ballRadius
+                    : rightPaddleX - ballRadius;
+            }
+
+            // Si la pelota sale por un costado, el rival anota.
+            if (game.ballX + ballRadius < 0) {
+                scorePoint("right");
+            }
+
+            if (game.ballX - ballRadius > canvas.width) {
+                scorePoint("left");
+            }
+        }
+
+        // Dibuja el fondo, la línea central, las paletas y la pelota en cada frame.
+        function drawGame() {
+            const leftPaddleX = 28;
+            const rightPaddleX = canvas.width - 28 - paddleWidth;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#020617";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.setLineDash([14, 16]);
+            ctx.strokeStyle = "#334155";
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, 18);
+            ctx.lineTo(canvas.width / 2, canvas.height - 18);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            ctx.fillStyle = "#38bdf8";
+            ctx.fillRect(leftPaddleX, game.leftPaddleY, paddleWidth, paddleHeight);
+            ctx.fillRect(rightPaddleX, game.rightPaddleY, paddleWidth, paddleHeight);
+
+            ctx.beginPath();
+            ctx.arc(game.ballX, game.ballY, ballRadius, 0, Math.PI * 2);
+            ctx.fillStyle = "#f8fafc";
+            ctx.fill();
+        }
+
+        // Bucle principal: actualiza el estado, redibuja y pide el siguiente frame.
+        function gameLoop() {
+            updatePaddles();
+            updateBall();
+            drawGame();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Escuchamos cuándo se presionan teclas. preventDefault evita que las flechas
+        // hagan scroll en la página mientras se juega.
+        document.addEventListener("keydown", (event) => {
+            const key = event.key.toLowerCase();
+
+            if (["arrowup", "arrowdown", " "].includes(key)) {
+                event.preventDefault();
+            }
+
+            if (key === "a") {
+                keysPressed.a = true;
+            }
+
+            if (key === "z") {
+                keysPressed.z = true;
+            }
+
+            if (key === "arrowup") {
+                keysPressed.arrowUp = true;
+            }
+
+            if (key === "arrowdown") {
+                keysPressed.arrowDown = true;
+            }
+
+            if (key === " ") {
+                serveBall();
+            }
+        });
+
+        // Al soltar una tecla, dejamos de mover la paleta correspondiente.
+        document.addEventListener("keyup", (event) => {
+            const key = event.key.toLowerCase();
+
+            if (key === "a") {
+                keysPressed.a = false;
+            }
+
+            if (key === "z") {
+                keysPressed.z = false;
+            }
+
+            if (key === "arrowup") {
+                keysPressed.arrowUp = false;
+            }
+
+            if (key === "arrowdown") {
+                keysPressed.arrowDown = false;
+            }
+        });
+
+        // Configuración inicial antes de arrancar el bucle de animación.
+        resetBall();
+        updateScoreboard();
+        drawGame();
+        gameLoop();
+    </script>
+</body>
+</html>

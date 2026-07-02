@@ -1,0 +1,14 @@
+C:\Users\Acer\Documents\OPPJUNJUL2026\HolaIA\bin\Debug\net8.0\HolaIA.exe
+C:\Users\Acer\Documents\OPPJUNJUL2026\HolaIA\bin\Debug\net8.0\HolaIA.deps.json
+C:\Users\Acer\Documents\OPPJUNJUL2026\HolaIA\bin\Debug\net8.0\HolaIA.runtimeconfig.json
+C:\Users\Acer\Documents\OPPJUNJUL2026\HolaIA\bin\Debug\net8.0\HolaIA.dll
+C:\Users\Acer\Documents\OPPJUNJUL2026\HolaIA\bin\Debug\net8.0\HolaIA.pdb
+C:\Users\Acer\Documents\OPPJUNJUL2026\HolaIA\obj\Debug\net8.0\HolaIA.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Acer\Documents\OPPJUNJUL2026\HolaIA\obj\Debug\net8.0\HolaIA.AssemblyInfoInputs.cache
+C:\Users\Acer\Documents\OPPJUNJUL2026\HolaIA\obj\Debug\net8.0\HolaIA.AssemblyInfo.cs
+C:\Users\Acer\Documents\OPPJUNJUL2026\HolaIA\obj\Debug\net8.0\HolaIA.csproj.CoreCompileInputs.cache
+C:\Users\Acer\Documents\OPPJUNJUL2026\HolaIA\obj\Debug\net8.0\HolaIA.dll
+C:\Users\Acer\Documents\OPPJUNJUL2026\HolaIA\obj\Debug\net8.0\refint\HolaIA.dll
+C:\Users\Acer\Documents\OPPJUNJUL2026\HolaIA\obj\Debug\net8.0\HolaIA.pdb
+C:\Users\Acer\Documents\OPPJUNJUL2026\HolaIA\obj\Debug\net8.0\HolaIA.genruntimeconfig.cache
+C:\Users\Acer\Documents\OPPJUNJUL2026\HolaIA\obj\Debug\net8.0\ref\HolaIA.dll

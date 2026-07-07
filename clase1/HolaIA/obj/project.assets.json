@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Acer\\Documents\\OPPJUNJUL2026\\HolaIA\\HolaIA.csproj",
+      "projectUniqueName": "C:\\Users\\Acer\\Documents\\OPPJUNJUL2026\\clase1\\HolaIA\\HolaIA.csproj",
       "projectName": "HolaIA",
-      "projectPath": "C:\\Users\\Acer\\Documents\\OPPJUNJUL2026\\HolaIA\\HolaIA.csproj",
+      "projectPath": "C:\\Users\\Acer\\Documents\\OPPJUNJUL2026\\clase1\\HolaIA\\HolaIA.csproj",
       "packagesPath": "C:\\Users\\Acer\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Acer\\Documents\\OPPJUNJUL2026\\HolaIA\\obj\\",
+      "outputPath": "C:\\Users\\Acer\\Documents\\OPPJUNJUL2026\\clase1\\HolaIA\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

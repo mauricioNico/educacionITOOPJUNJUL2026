@@ -1,0 +1,15 @@
+C:\Users\Acer\Documents\OPPJUNJUL2026\clase4\pruebas\CalculadoraNUnit\calculadora\bin\Debug\net8.0\Calculadora.exe
+C:\Users\Acer\Documents\OPPJUNJUL2026\clase4\pruebas\CalculadoraNUnit\calculadora\bin\Debug\net8.0\Calculadora.deps.json
+C:\Users\Acer\Documents\OPPJUNJUL2026\clase4\pruebas\CalculadoraNUnit\calculadora\bin\Debug\net8.0\Calculadora.runtimeconfig.json
+C:\Users\Acer\Documents\OPPJUNJUL2026\clase4\pruebas\CalculadoraNUnit\calculadora\bin\Debug\net8.0\Calculadora.dll
+C:\Users\Acer\Documents\OPPJUNJUL2026\clase4\pruebas\CalculadoraNUnit\calculadora\bin\Debug\net8.0\Calculadora.pdb
+C:\Users\Acer\Documents\OPPJUNJUL2026\clase4\pruebas\CalculadoraNUnit\calculadora\obj\Debug\net8.0\Calculadora.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Acer\Documents\OPPJUNJUL2026\clase4\pruebas\CalculadoraNUnit\calculadora\obj\Debug\net8.0\Calculadora.AssemblyInfoInputs.cache
+C:\Users\Acer\Documents\OPPJUNJUL2026\clase4\pruebas\CalculadoraNUnit\calculadora\obj\Debug\net8.0\Calculadora.AssemblyInfo.cs
+C:\Users\Acer\Documents\OPPJUNJUL2026\clase4\pruebas\CalculadoraNUnit\calculadora\obj\Debug\net8.0\Calculadora.csproj.CoreCompileInputs.cache
+C:\Users\Acer\Documents\OPPJUNJUL2026\clase4\pruebas\CalculadoraNUnit\calculadora\obj\Debug\net8.0\Calculadora.sourcelink.json
+C:\Users\Acer\Documents\OPPJUNJUL2026\clase4\pruebas\CalculadoraNUnit\calculadora\obj\Debug\net8.0\Calculadora.dll
+C:\Users\Acer\Documents\OPPJUNJUL2026\clase4\pruebas\CalculadoraNUnit\calculadora\obj\Debug\net8.0\refint\Calculadora.dll
+C:\Users\Acer\Documents\OPPJUNJUL2026\clase4\pruebas\CalculadoraNUnit\calculadora\obj\Debug\net8.0\Calculadora.pdb
+C:\Users\Acer\Documents\OPPJUNJUL2026\clase4\pruebas\CalculadoraNUnit\calculadora\obj\Debug\net8.0\Calculadora.genruntimeconfig.cache
+C:\Users\Acer\Documents\OPPJUNJUL2026\clase4\pruebas\CalculadoraNUnit\calculadora\obj\Debug\net8.0\ref\Calculadora.dll

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excepciones en JavaScript</title>
+
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            margin:40px;
+            background:#f4f4f4;
+        }
+
+        input{
+            padding:8px;
+            margin:5px;
+            width:220px;
+        }
+
+        button{
+            padding:10px 20px;
+            margin-top:10px;
+        }
+
+        #resultado{
+            margin-top:20px;
+            padding:15px;
+            background:white;
+            border:1px solid gray;
+            min-height:80px;
+        }
+    </style>
+
+</head>
+<body>
+
+<h1>Excepciones en JavaScript</h1>
+
+<h3>Clase Persona</h3>
+
+<form onsubmit="crearPersona(event)">
+<label for="txtNombre">Nombre</label><br>
+<input type="text" id="txtNombre" name="nombre">
+
+<br><br>
+
+<label for="txtEdad">Edad</label><br>
+<input type="number" id="txtEdad" name="edad">
+
+<br><br>
+
+<button type="submit">
+    Crear Persona
+</button>
+</form>
+
+<div id="resultado" aria-live="polite"></div>
+
+<script>
+
+class Persona{
+
+    constructor(nombre, edad){
+
+        if(nombre.trim()==""){
+            throw new Error("El nombre no puede estar vacío.");
+        }
+
+        this.nombre = nombre;
+
+        // Se utiliza el setter
+        this.setEdad(edad);
+
+    }
+
+    //=========================
+    // Setter
+    //=========================
+    setEdad(edad){
+
+        if(isNaN(edad)){
+            throw new Error("La edad debe ser un número.");
+        }
+
+        if(edad < 18){
+            throw new Error("No se puede crear una persona menor de 18 años.");
+        }
+
+        this.edad = edad;
+
+    }
+
+    //=========================
+    // Getter
+    //=========================
+    getEdad(){
+
+        return this.edad;
+
+    }
+
+    mostrarDatos(){
+
+        return `
+            <h3>Persona creada correctamente</h3>
+
+            Nombre: ${this.nombre}<br>
+            Edad: ${this.getEdad()} años
+        `;
+
+    }
+
+}
+
+
+function crearPersona(event){
+
+    event.preventDefault();
+
+    const nombre = document.getElementById("txtNombre").value;
+    const edad = Number(document.getElementById("txtEdad").value);
+
+    const resultado = document.getElementById("resultado");
+
+    try{
+
+        const persona = new Persona(nombre, edad);
+
+        //----------------------------------------------------
+        // Ejemplo de modificación utilizando el setter
+        //----------------------------------------------------
+        // persona.setEdad(30);     // Correcto
+        // persona.setEdad(15);     // Genera excepción
+        //----------------------------------------------------
+
+        resultado.innerHTML = persona.mostrarDatos();
+
+    }
+    catch(error){
+
+        resultado.innerHTML =
+        "<span style='color:red'><b>Error:</b> "
+        + error.message +
+        "</span>";
+
+        console.error(error);
+
+    }
+    finally{
+
+        console.log("Finalizó la operación.");
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

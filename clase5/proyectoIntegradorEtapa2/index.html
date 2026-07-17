@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Sistema de Gestión Fintech</title>
+
+    <style>
+
+        /* =====================================
+           CONFIGURACIÓN GENERAL
+        ===================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 30px;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            color: #263238;
+            background: #f4f6f8;
+        }
+
+        main {
+            max-width: 1050px;
+            margin: auto;
+            padding: 35px;
+
+            background: #ffffff;
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            margin-bottom: 15px;
+            color: #1f3c88;
+        }
+
+        h2 {
+            margin-bottom: 18px;
+            color: #263238;
+        }
+
+        p {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        /* =====================================
+           ENCABEZADO
+        ===================================== */
+
+        .encabezado {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+
+            border-bottom: 1px solid #d8dee4;
+        }
+
+        .subtitulo {
+            color: #546e7a;
+        }
+
+        /* =====================================
+           BOTONES
+        ===================================== */
+
+        .acciones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+
+            margin-bottom: 30px;
+        }
+
+        button {
+            padding: 12px 20px;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            color: #ffffff;
+            background: #1f6feb;
+
+            border: none;
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s,
+                transform 0.1s;
+        }
+
+        button:hover {
+            background: #174ea6;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            color: #eceff1;
+            background: #90a4ae;
+            cursor: not-allowed;
+        }
+
+        .boton-secundario {
+            background: #455a64;
+        }
+
+        .boton-secundario:hover {
+            background: #263238;
+        }
+
+        /* =====================================
+           DISTRIBUCIÓN DE CONTENIDO
+        ===================================== */
+
+        .contenido {
+            display: grid;
+            grid-template-columns: 1fr 1.25fr;
+            gap: 25px;
+        }
+
+        .panel {
+            padding: 22px;
+
+            background: #fafafa;
+            border: 1px solid #d8dee4;
+            border-radius: 8px;
+        }
+
+        /* =====================================
+           ESTADO DEL CLIENTE
+        ===================================== */
+
+        #estado-cliente {
+            min-height: 280px;
+        }
+
+        .sin-cliente {
+            padding: 18px;
+
+            color: #607d8b;
+            background: #eceff1;
+
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .fila-dato {
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            gap: 12px;
+
+            padding: 12px 0;
+
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .fila-dato:last-child {
+            border-bottom: none;
+        }
+
+        .etiqueta {
+            font-weight: bold;
+            color: #455a64;
+        }
+
+        .valor {
+            overflow-wrap: anywhere;
+            color: #1f3c88;
+        }
+
+        /* =====================================
+           CONSOLA VISIBLE
+        ===================================== */
+
+        #salida {
+            min-height: 280px;
+            max-height: 450px;
+            padding: 18px;
+
+            overflow-y: auto;
+
+            color: #e6edf3;
+            background: #0d1117;
+
+            border-radius: 8px;
+
+            font-family:
+                Consolas,
+                "Courier New",
+                monospace;
+        }
+
+        .mensaje {
+            margin-bottom: 9px;
+            padding: 8px 10px;
+
+            border-left: 4px solid transparent;
+            border-radius: 3px;
+
+            line-height: 1.4;
+        }
+
+        .titulo-terminal {
+            margin-top: 12px;
+
+            font-weight: bold;
+            color: #ffffff;
+
+            border-left-color: #58a6ff;
+            background: #161b22;
+        }
+
+        .informacion {
+            color: #79c0ff;
+            border-left-color: #1f6feb;
+        }
+
+        .dato {
+            color: #c9d1d9;
+            border-left-color: #8b949e;
+        }
+
+        .exito {
+            color: #7ee787;
+            border-left-color: #238636;
+        }
+
+        .error {
+            color: #ff7b72;
+            border-left-color: #da3633;
+            background: rgba(218, 54, 51, 0.1);
+        }
+
+        .advertencia {
+            color: #e3b341;
+            border-left-color: #d29922;
+        }
+
+        /* =====================================
+           NOTA INFORMATIVA
+        ===================================== */
+
+        .nota {
+            margin-top: 25px;
+            padding: 16px;
+
+            background: #fff8e1;
+            border-left: 6px solid #f9a825;
+            border-radius: 5px;
+        }
+
+        /* =====================================
+           PIE DE PÁGINA
+        ===================================== */
+
+        footer {
+            margin-top: 35px;
+            padding-top: 20px;
+
+            color: #607d8b;
+
+            border-top: 1px solid #d8dee4;
+
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* =====================================
+           DISEÑO RESPONSIVO
+        ===================================== */
+
+        @media (max-width: 800px) {
+
+            body {
+                padding: 15px;
+            }
+
+            main {
+                padding: 22px;
+            }
+
+            .contenido {
+                grid-template-columns: 1fr;
+            }
+
+            .fila-dato {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <main>
+
+        <header class="encabezado">
+
+            <h1>Sistema de Gestión Fintech</h1>
+
+            <p class="subtitulo">
+                Registro y gestión de clientes aplicando
+                Programación Orientada a Objetos con JavaScript.
+            </p>
+
+        </header>
+
+        <section class="acciones">
+
+            <button id="btn-iniciar">
+                Registrar cliente
+            </button>
+
+            <button
+                id="btn-menu"
+                disabled
+            >
+                Abrir menú de operaciones
+            </button>
+
+            <button
+                id="btn-limpiar"
+                class="boton-secundario"
+            >
+                Limpiar historial
+            </button>
+
+        </section>
+
+        <section class="contenido">
+
+            <article class="panel">
+
+                <h2>Estado actual del cliente</h2>
+
+                <div id="estado-cliente">
+
+                    <p class="sin-cliente">
+                        Todavía no se registró ningún cliente.
+                    </p>
+
+                </div>
+
+            </article>
+
+            <article class="panel">
+
+                <h2>Historial de operaciones</h2>
+
+                <div
+                    id="salida"
+                    aria-live="polite"
+                ></div>
+
+            </article>
+
+        </section>
+
+        <aside class="nota">
+
+            <strong>Funcionamiento:</strong>
+
+            <p>
+                Los datos se ingresan mediante ventanas emergentes.
+                Si un dato no supera la validación, la aplicación
+                informa el error y vuelve a solicitar únicamente
+                ese dato.
+            </p>
+
+            <p>
+                Los valores ingresados, los errores y los resultados
+                de las operaciones se muestran directamente en esta
+                página.
+            </p>
+
+        </aside>
+
+        <footer>
+
+            Programación Orientada a Objetos con JavaScript
+            <br>
+
+            Proyecto Integrador — Sistema de Gestión Fintech
+
+        </footer>
+
+    </main>
+
+    <!--
+        Primero se carga Cliente.js porque App.js
+        utiliza la clase Cliente.
+    -->
+
+    <script src="Cliente.js"></script>
+    <script src="App.js"></script>
+
+</body>
+
+</html>

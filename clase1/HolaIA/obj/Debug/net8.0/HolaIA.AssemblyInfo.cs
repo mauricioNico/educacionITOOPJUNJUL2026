@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HolaIA")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+786007686e796480a2f8fc59af2237edbffcafc1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+174efb0859470873b9681579f35a854b1db9a2af")]
 [assembly: System.Reflection.AssemblyProductAttribute("HolaIA")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HolaIA")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

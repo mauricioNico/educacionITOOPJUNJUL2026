@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="
+             http://maven.apache.org/POM/4.0.0
+             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.educacionIT</groupId>
+    <artifactId>formulario-post</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <!-- El proyecto será una aplicación web -->
+    <packaging>war</packaging>
+
+    <properties>
+        <maven.compiler.release>17</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+
+        <!--
+            API necesaria para crear Servlets.
+
+            Se utiliza Jakarta porque la aplicación será
+            desplegada en Tomcat 10.
+        -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+        <!--
+            Nombre del archivo WAR y del contexto
+            que tendrá la aplicación en Tomcat.
+        -->
+        <finalName>formulario-post</finalName>
+
+        <!--
+            Ubicación de las clases Java.
+            Esta es la ubicación estándar de Maven.
+        -->
+        <sourceDirectory>src/main/java</sourceDirectory>
+
+        <plugins>
+
+            <!-- Compila el proyecto con Java 17 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+
+                <configuration>
+                    <release>17</release>
+                </configuration>
+            </plugin>
+
+            <!-- Genera el archivo WAR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+
+                <configuration>
+
+                    <!-- Permite construir el WAR sin web.xml -->
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+
+                    <!-- Ubicación de los archivos HTML y recursos web -->
+                    <warSourceDirectory>
+                        src/main/webapp
+                    </warSourceDirectory>
+
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+</project>

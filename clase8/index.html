@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Consulta GET</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body{
+            font-family: Arial;
+            width:500px;
+            margin:40px auto;
+        }
+
+        input{
+            width:300px;
+            padding:8px;
+        }
+
+        button{
+            padding:8px 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h2 id="titulo">Consulta a Google utilizando GET</h2>
+
+<form action="https://www.google.com/search"
+      method="post">
+
+    <input
+        type="text"
+        name="q"
+        placeholder="Buscar...">
+
+    <button type="submit">
+        Buscar
+    </button>
+
+</form>
+
+<script>
+    const titulo = document.getElementById("titulo");
+    //titulo.textContent = "¡Hola desde JavaScript!";
+    titulo.style.color = "blue";
+</script>
+
+</body>
+</html>

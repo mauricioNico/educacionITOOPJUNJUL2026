@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Formulario POST</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #eef2f7;
+        }
+
+        .contenedor {
+            width: 420px;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            margin-top: 0;
+            text-align: center;
+            color: #1d3557;
+        }
+
+        .campo {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #999;
+            border-radius: 5px;
+        }
+
+        input:focus {
+            outline: 2px solid #457b9d;
+            border-color: transparent;
+        }
+
+        button {
+            width: 100%;
+            padding: 11px;
+            font-size: 16px;
+            color: white;
+            background-color: #1d3557;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #457b9d;
+        }
+
+        .aclaracion {
+            margin-top: 18px;
+            font-size: 14px;
+            color: #555;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="contenedor">
+
+        <h1>Registro de persona</h1>
+
+        <form action="saludar" method="POST">
+
+            <div class="campo">
+                <label for="nombre">Nombre</label>
+
+                <input
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    placeholder="Ingrese su nombre"
+                    required
+                >
+            </div>
+
+            <div class="campo">
+                <label for="apellido">Apellido</label>
+
+                <input
+                    type="text"
+                    id="apellido"
+                    name="apellido"
+                    placeholder="Ingrese su apellido"
+                    required
+                >
+            </div>
+
+            <button type="submit">
+                Enviar mediante POST
+            </button>
+
+        </form>
+
+        <p class="aclaracion">
+            Los datos serán procesados por un Servlet Java.
+        </p>
+
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ejemplo innerHTML</title>
+
+<style>
+
+body{
+   font-family: Comic Sans MS;
+    margin:40px;
+}
+
+#contenedor{
+
+    border:1px solid gray;
+    padding:20px;
+    margin-top:20px;
+
+}
+
+button{
+
+    padding:10px 20px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>innerHTML</h1>
+
+<div id="contenedor">
+
+    Aquí aparecerá nuevo contenido.
+
+</div>
+
+<br>
+
+<button onclick="mostrarContenido()">
+
+    Mostrar contenido HTML
+
+</button>
+
+<script>
+
+function mostrarContenido(){
+
+    let caja = document.getElementById("contenedor");
+
+    caja.innerHTML = `
+        <h2>Bienvenidos</h2>
+
+        <!--p>Este contenido fue generado mediante <strong>innerHTML</strong>.</p>
+
+        <ul>
+            <li>HTML dinámico</li>
+            <li>Texto</li>
+            <li>Listas</li>
+        </ul-->
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>Nombre</th>
+                <th>Edad</th>
+            </tr>
+            <tr>
+                <td>Juan</td>
+                <td>25</td>
+            </tr>
+            <tr>
+                <td>Ana</td>
+                <td>30</td>
+            </tr>
+    `;
+
+}
+
+</script>
+
+</body>
+</html>

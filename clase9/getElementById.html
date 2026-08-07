@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo getElementById()</title>
+
+    <style>
+        body{
+            font-family: Arial;
+            margin:40px;
+        }
+
+        #mensaje{
+            color:rgba(251, 0, 255, 0.783);
+            font-size:20px;
+            margin-top:20px;
+        }
+
+        button{
+            padding:10px 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>document.getElementById()</h1>
+
+    <p id="mensaje">
+        Este texto será modificado.
+    </p>
+
+    <button onclick="cambiarTexto()">
+        Cambiar texto
+    </button>
+
+    <script>
+
+        function cambiarTexto(){
+
+            let elemento = document.getElementById("mensaje");
+
+            elemento.textContent = "Cambio vía el script de JavaScript";
+
+        }
+
+    </script>
+
+</body>
+</html>
